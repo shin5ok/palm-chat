@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "palm-chat"
+version = "0.1.0"
+description = ""
+authors = ["shin5ok <shin5ok@55mp.com>"]
+readme = "README.md"
+packages = [{include = "palm_chat"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+langchain = "^0.0.278"
+fastapi = "^0.103.0"
+uvicorn = "^0.23.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
