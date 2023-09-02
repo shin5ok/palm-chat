@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["shin5ok <shin5ok@55mp.com>"]
 readme = "README.md"
-packages = [{include = "palm_chat"}]
+# packages = [{include = "palm_chat"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
