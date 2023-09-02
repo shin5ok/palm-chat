@@ -1,10 +1,7 @@
 import sys
-from fastapi import FastAPI, Depends, Header, Request, APIRouter
+from fastapi import FastAPI, Depends, Header, Request, APIRouter, Response
 from pydantic import BaseModel, Field, EmailStr
 import logging
-
-from langchain.chains import ConversationChain
-from langchain.memory import ConversationBufferMemory
 
 import common
 
@@ -24,5 +21,7 @@ class RequestBody(BaseModel):
     message: Message
 
 @routers.post("/google_chat")
-def _google_chat(body: RequestBody, request: Request, authorization = Header(default=None), chat_model = Depends(common.get_llm)):
+def _google_chat(body: RequestBody, request: Request, authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
+    if not common.verify_id_token(project['number'], authorization):
+        return Response("Invalid Token", 403)
     return chat_model.predict(input=str(body.message))
