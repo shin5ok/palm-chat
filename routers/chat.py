@@ -2,8 +2,8 @@ import sys
 from fastapi import FastAPI, Depends, Header, Request, APIRouter, Response
 from pydantic import BaseModel, Field, EmailStr
 import logging
-
 import common
+from storategy import GoogleChat
 
 app = FastAPI()
 
@@ -22,6 +22,8 @@ class RequestBody(BaseModel):
 
 @routers.post("/google_chat")
 def _google_chat(body: RequestBody, request: Request, authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
-    if not common.verify_id_token(project['number'], authorization):
-        return Response("Invalid Token", 403)
-    return chat_model.predict(input=str(body.message))
+
+    v = GoogleChat(project)
+    v.validation(authorization)
+
+    return v.say(str(body.message))
