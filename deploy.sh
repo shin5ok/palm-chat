@@ -6,7 +6,6 @@ gcloud run deploy \
     ${NAME} \
     --region=asia-northeast1 \
     --source=. \
-    --max-instances=1 \
     --memory=1Gi \
     --allow-unauthenticated \
     --set-env-vars=PROJECT_NUMBER=${PROJECT_NUMBER},PROJECT_ID=${PROJECT_ID}

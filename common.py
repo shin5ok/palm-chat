@@ -16,7 +16,7 @@ parameters = {
         }
 
 def get_llm() -> ConversationChain:
-    global llm, memory
+    global llm, memory, parameters
     if not llm:
         llm = ChatVertexAI(**parameters)
         print("generated llm")
