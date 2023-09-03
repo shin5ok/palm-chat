@@ -30,21 +30,8 @@ def _google_chat(body: RequestBody, request: Request, authorization = Header(def
     return v.say(str(body.message))
 
 
-class SlackRequest(BaseModel):
-    team_id: str
-    token: str
-    text: str
-
 @routers.post("/slack")
-def _slack(slack_request: SlackRequest, chat_model = Depends(common.get_llm), project = Depends(common.project)):
-
-    print(slack_request.model_dump())
-    v = Slack(project)
-    print(slack_request.text)
-    return v.say(str(slack_request.text))
-
-@routers.post("/slack2")
-def _slack2(body: str = Body(embed=False), authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
+def _slack(body: str = Body(embed=False), authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
     import urllib
     v = Slack(project)
     p = urllib.parse.parse_qs(body)
