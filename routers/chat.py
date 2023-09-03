@@ -46,10 +46,9 @@ def _slack(slack_request: SlackRequest, chat_model = Depends(common.get_llm), pr
 @routers.post("/slack2")
 def _slack2(body: str = Body(embed=False), authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
     import urllib
-    print(body)
     v = Slack(project)
     p = urllib.parse.parse_qs(body)
-    print(p)
+    v.validation(p['token'])
     gen_message = v.say(str(p['text'][0]))
-    return Message(**gen_message)
+    return gen_message
 

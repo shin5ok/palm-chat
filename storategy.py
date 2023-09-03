@@ -50,14 +50,11 @@ class GoogleChat(ChatContext):
 class Slack(ChatContext):
     
     def validation(self, token: str) -> None:
+        # TODO implement here
         should_be_token = "..."
         token = should_be_token
-        if token == should_be_token:
+        if token != should_be_token:
             raise HTTPException(status_code=403, detail="Invalid token")
-        ...
     
     def say(self, message: str) -> dict:
-        from slack_sdk.webhook import WebhookClient
-        webhook = "https://..."
-        WebhookClient(webhook).send(text=self.predict(message))
-        return {}
+        return dict(text=self.predict(message))
