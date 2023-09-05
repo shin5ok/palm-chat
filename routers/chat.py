@@ -1,6 +1,6 @@
 import sys
 from typing import Annotated, Optional, List
-from fastapi import FastAPI, Depends, Header, Request, APIRouter, Response, Body
+from fastapi import FastAPI, Depends, Header, Request, APIRouter, Response, HTTPException, Body
 from pydantic import BaseModel, Field, EmailStr
 import logging
 import common
@@ -33,9 +33,15 @@ def _google_chat(body: RequestBody, request: Request, authorization = Header(def
 @routers.post("/slack")
 def _slack(body: str = Body(embed=False), authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
     import urllib
+
     v = Slack(project)
     p = urllib.parse.parse_qs(body)
-    v.validation(p['token'])
-    gen_message = v.say(str(p['text'][0]))
-    return gen_message
 
+    if p['user_name'][0] == 'slackbot':
+        raise HTTPException(status_code=204, detail="slackbot")
+
+    v.validation(p['token'])
+
+    gen_message = v.say(str(p['text'][0]))
+
+    return gen_message
