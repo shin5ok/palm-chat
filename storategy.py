@@ -48,10 +48,13 @@ class GoogleChat(ChatContext):
         return dict(text=self.predict(message))
 
 class Slack(ChatContext):
-    
+
+    def __init__(self, project: dict, config: dict):
+        self.token = config['token']
+        super().__init__(project)
+
     def validation(self, token: str) -> None:
-        # TODO implement here
-        should_be_token = "..."
+        should_be_token = self.token
         token = should_be_token
         if token != should_be_token:
             raise HTTPException(status_code=403, detail="Invalid token")

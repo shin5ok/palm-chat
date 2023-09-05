@@ -32,9 +32,11 @@ def _google_chat(body: RequestBody, request: Request, authorization = Header(def
 
 @routers.post("/slack")
 def _slack(body: str = Body(embed=False), authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
+    import os
     import urllib
 
-    v = Slack(project)
+    config = dict(token=os.environ.get("SLACK_TOKEN"))
+    v = Slack(project, config)
     p = urllib.parse.parse_qs(body)
 
     if p['user_name'][0] == 'slackbot':
