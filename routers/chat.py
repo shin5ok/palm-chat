@@ -1,7 +1,7 @@
 import sys
-from typing import Annotated, Optional, List
-from fastapi import FastAPI, Depends, Header, Request, APIRouter, Response, HTTPException, Body
-from pydantic import BaseModel, Field, EmailStr
+from typing import List
+from fastapi import FastAPI, Depends, Header, Request, APIRouter, HTTPException, Body
+from pydantic import BaseModel, EmailStr
 import logging
 import common
 from storategy import GoogleChat, Slack
