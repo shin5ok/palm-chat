@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 
-RUN pip install --no-cache-dir poetry
-RUN poetry config virtualenvs.in-project true
+RUN pip install --no-cache-dir poetry \
+  && poetry config virtualenvs.in-project true
 
 WORKDIR /app
 COPY . .
