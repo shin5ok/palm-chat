@@ -33,17 +33,16 @@ def _google_chat(body: RequestBody, request: Request, authorization = Header(def
 @routers.post("/slack")
 def _slack(body: str = Body(embed=False), authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
     import os
-    import urllib
+    from urllib import parse
 
     config = dict(token=os.environ.get("SLACK_TOKEN"))
     v = Slack(project, config)
-    p = urllib.parse.parse_qs(body)
+    p = parse.parse_qs(body)
 
     if p['user_name'][0] == 'slackbot':
         raise HTTPException(status_code=204, detail="slackbot")
 
-    v.validation(p['token'])
+    v.validation(str(p['token']))
 
     gen_message = v.say(str(p['text'][0]))
-
     return gen_message
