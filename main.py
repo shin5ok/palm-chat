@@ -18,7 +18,7 @@ llm = None
 app.include_router(
         chat.routers,
         prefix="/chat",
-        dependencies=[Depends(common.get_llm)]
+        # dependencies=[Depends(common.get_llm)]
     )
 
 if __name__ == '__main__':
