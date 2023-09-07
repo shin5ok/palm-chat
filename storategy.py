@@ -17,7 +17,7 @@ class ChatContext(metaclass=ABCMeta):
     def say() -> str:
         ...
     
-    def predict(self, message) -> str:
+    async def predict(self, message) -> str:
         chat_model = common.get_llm()
         gen_message = chat_model.predict(input=message)
         return gen_message
@@ -44,8 +44,8 @@ class GoogleChat(ChatContext):
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
-    def say(self, message: str) -> dict:
-        return dict(text=self.predict(message))
+    async def say(self, message: str) -> dict:
+        return dict(text=await self.predict(message))
 
 class Slack(ChatContext):
 
@@ -59,5 +59,5 @@ class Slack(ChatContext):
         if token != should_be_token:
             raise HTTPException(status_code=403, detail="Invalid token")
     
-    def say(self, message: str) -> dict:
-        return dict(text=self.predict(message))
+    async def say(self, message: str) -> dict:
+        return dict(text=await self.predict(message))

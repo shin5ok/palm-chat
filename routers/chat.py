@@ -22,7 +22,7 @@ class RequestBody(BaseModel):
     message: Message
 
 @routers.post("/google_chat")
-def _google_chat(body: RequestBody, request: Request, authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
+async def _google_chat(body: RequestBody, request: Request, authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
 
     v = GoogleChat(project)
     v.validation(authorization)
@@ -31,7 +31,7 @@ def _google_chat(body: RequestBody, request: Request, authorization = Header(def
 
 
 @routers.post("/slack")
-def _slack(body: str = Body(embed=False), authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
+async def _slack(body: str = Body(embed=False), authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
     import os
     from urllib import parse
 
