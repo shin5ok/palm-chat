@@ -3,7 +3,7 @@ import logging
 import common
 from fastapi import HTTPException
 
-class ChatContext(metaclass=ABCMeta):
+class ChatStorategy(metaclass=ABCMeta):
 
     def __init__(self, project: dict):
         self.project_number = project['number']
@@ -23,7 +23,7 @@ class ChatContext(metaclass=ABCMeta):
         return gen_message
 
 
-class GoogleChat(ChatContext):
+class GoogleChat(ChatStorategy):
 
     def validation(self, authorization: str) -> None:
         from oauth2client import client
@@ -47,7 +47,7 @@ class GoogleChat(ChatContext):
     async def say(self, message: str) -> dict:
         return dict(text=await self.predict(message))
 
-class Slack(ChatContext):
+class Slack(ChatStorategy):
 
     def __init__(self, project: dict, config: dict):
         self.token = config['token']
