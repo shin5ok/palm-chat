@@ -7,6 +7,7 @@ from langchain.memory import ConversationBufferMemory
 
 llm = None
 memory = ConversationBufferMemory()
+_debug: bool = 'DEBUG' in os.environ
 
 parameters = {
             "temperature": 0.6,
@@ -29,11 +30,11 @@ def get_llm() -> ConversationChain:
 
     return chat_model
 
-def project():
+def project() -> dict:
     return {
         'id': os.environ.get('GOOGLE_CLOUD_PROJECT'),
         'number': os.environ.get('PROJECT_NUMBER'),
     }
 
 def is_debug():
-    return "DEBUG" in os.environ
+    return _debug
