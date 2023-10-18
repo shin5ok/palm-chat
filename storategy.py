@@ -17,7 +17,7 @@ class ChatStorategy(metaclass=ABCMeta):
     def say() -> str:
         ...
     
-    async def predict(self, message) -> str:
+    def predict(self, message) -> str:
         chat_model = common.get_llm()
         gen_message = chat_model.predict(input=message)
         return gen_message
@@ -44,8 +44,8 @@ class GoogleChat(ChatStorategy):
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
-    async def say(self, message: str) -> dict:
-        return dict(text=await self.predict(message))
+    def say(self, message: str) -> dict:
+        return dict(text=self.predict(message))
 
 class Slack(ChatStorategy):
 
@@ -59,5 +59,5 @@ class Slack(ChatStorategy):
         if token != should_be_token:
             raise HTTPException(status_code=403, detail="Invalid token")
     
-    async def say(self, message: str) -> dict:
-        return dict(text=await self.predict(message))
+    def say(self, message: str) -> dict:
+        return dict(text=self.predict(message))
