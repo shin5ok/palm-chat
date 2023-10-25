@@ -1,5 +1,4 @@
 import os
-from oauth2client import client
 
 from langchain.chat_models import ChatVertexAI
 from langchain.chains import ConversationChain
@@ -20,14 +19,13 @@ def get_llm() -> ConversationChain:
     global llm, memory, parameters
     if not llm:
         llm = ChatVertexAI(**parameters)
-        print("generated llm")
+        print("Generating LLM instance")
 
     chat_model = ConversationChain(
         llm=llm,
         verbose=True,
         memory=memory,
     )
-
     return chat_model
 
 def project() -> dict:
