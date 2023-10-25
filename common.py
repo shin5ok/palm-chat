@@ -21,12 +21,11 @@ def get_llm() -> ConversationChain:
         llm = ChatVertexAI(**parameters)
         print("Generating LLM instance")
 
-    chat_model = ConversationChain(
+    return ConversationChain(
         llm=llm,
         verbose=True,
         memory=memory,
     )
-    return chat_model
 
 def project() -> dict:
     return {
