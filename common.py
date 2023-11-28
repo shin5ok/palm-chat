@@ -7,13 +7,15 @@ from langchain.memory import ConversationBufferMemory
 
 llm = None
 memory = ConversationBufferMemory()
+model_name: str = os.environ.get('MODEL_NAME', 'chat-bison')
 _debug: bool = 'DEBUG' in os.environ
 
 parameters = {
+            "model_name": model_name,
             "temperature": 0.6,
             "max_output_tokens": 1024,
             "top_p": 0.8,
-            "top_k": 40
+            "top_k": 40,
         }
 
 def get_llm() -> ConversationChain:
