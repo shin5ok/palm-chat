@@ -9,6 +9,7 @@ memory = ConversationBufferMemory()
 _debug: bool = 'DEBUG' in os.environ
 
 parameters = {
+            "model_name": "chat-bison@002",
             "temperature": 0.6,
             "max_output_tokens": 1024,
             "top_p": 0.8,
