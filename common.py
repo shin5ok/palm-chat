@@ -7,9 +7,10 @@ from langchain.memory import ConversationBufferMemory
 llm = None
 memory = ConversationBufferMemory()
 _debug: bool = 'DEBUG' in os.environ
+default_model = 'chat-bison@002'
 
 parameters = {
-            "model_name": "chat-bison@002",
+            "model_name": default_model,
             "temperature": 0.6,
             "max_output_tokens": 1024,
             "top_p": 0.8,
