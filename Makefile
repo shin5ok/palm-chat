@@ -1,4 +1,4 @@
-SA:=parm2-api@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com
+SA := palm2-api@$(GOOGLE_CLOUD_PROJECT).iam.gserviceaccount.com
 
 .PHONY: deploy
 deploy:
@@ -7,7 +7,9 @@ deploy:
 .PHONY: sa
 sa:
 	gcloud iam service-accounts create palm2-api
-	gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member=$(SA) --role=roles/aiplatform.user
+	gcloud projects add-iam-policy-binding $(GOOGLE_CLOUD_PROJECT) --member=serviceAccount:$(SA) --role=roles/aiplatform.user
+
+.PHONY: iam
 
 .PHONY: test-local
 test-local:
@@ -16,4 +18,3 @@ test-local:
 .PHONY: run-local
 run-local:
 	SLACK_TOKEN=test_token poetry run python main.py
-
