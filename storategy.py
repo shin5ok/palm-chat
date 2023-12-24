@@ -23,6 +23,14 @@ class ChatStorategy(metaclass=ABCMeta):
         return gen_message
 
 
+class Test(ChatStorategy):
+
+    def validation(self) -> bool:
+        return True
+
+    def say(self, message: str) -> dict:
+        return dict(text=self.predict(message))
+
 class GoogleChat(ChatStorategy):
 
     def validation(self, authorization: str) -> None:

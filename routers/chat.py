@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends, Header, Request, APIRouter, HTTPException,
 from pydantic import BaseModel, EmailStr
 import logging
 import common
-from storategy import GoogleChat, Slack
+from storategy import GoogleChat, Slack, Test
 
 app = FastAPI()
 
@@ -20,6 +20,17 @@ class Message(BaseModel):
 
 class RequestBody(BaseModel):
     message: Message
+
+
+@routers.post("/justtestapi")
+async def _test(body: RequestBody, request: Request, authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):
+
+    if request.client.host != "127.0.0.1":
+        raise HTTPException(status_code=403, detail="This api is allowed only from localhost")
+
+    logger.info(str(body.message))
+    v = Test(project)
+    return v.say(str(body.message))
 
 @routers.post("/google_chat")
 async def _google_chat(body: RequestBody, request: Request, authorization = Header(default=None), chat_model = Depends(common.get_llm), project = Depends(common.project)):

@@ -25,7 +25,7 @@ if __name__ == '__main__':
     import os
     port = os.environ.get('PORT', 8000)
     options = {
-        'port': port,
+        'port': int(port),
         'workers': 2,
         'host': '0.0.0.0',
         'reload': True,
