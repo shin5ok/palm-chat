@@ -7,7 +7,7 @@ from langchain.memory import ConversationBufferMemory
 
 llm = None
 memory = ConversationBufferMemory()
-model_name: str = os.environ.get('MODEL_NAME', 'chat-bison')
+model_name: str = os.environ.get('MODEL_NAME', 'chat-bison@002')
 _debug: bool = 'DEBUG' in os.environ
 
 parameters = {
