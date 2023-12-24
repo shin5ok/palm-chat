@@ -22,8 +22,10 @@ app.include_router(
     )
 
 if __name__ == '__main__':
+    import os
+    port = os.environ.get('PORT', 8000)
     options = {
-        'port': 8080,
+        'port': port,
         'workers': 2,
         'host': '0.0.0.0',
         'reload': True,
